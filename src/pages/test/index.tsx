@@ -1,8 +1,14 @@
-import React from 'react'
-import { Text } from '@mantine/core'
+import { Text, Button, useMantineColorScheme } from '@mantine/core'
 
 const TestPage = () => {
-    return <Text>Test Page</Text>
+    const { toggleColorScheme } = useMantineColorScheme()
+
+    return (
+        <>
+            <Text>Test Page Mantine works well, but how to pass colorScheme dark || light ? </Text>
+            <Button onClick={() => toggleColorScheme()}>Toggle</Button>
+        </>
+    )
 }
 
 export default TestPage

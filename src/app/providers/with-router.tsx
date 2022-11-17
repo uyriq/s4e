@@ -1,3 +1,4 @@
+// HOC-компонент
 import { Suspense } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 

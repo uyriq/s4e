@@ -12,7 +12,44 @@ const withMantine = (element: () => React.ReactNode) => () => {
 
     return (
         <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-            <MantineProvider withGlobalStyles withNormalizeCSS theme={{ colorScheme }}>
+            <MantineProvider
+                withGlobalStyles
+                withNormalizeCSS
+                theme={{
+                    colorScheme,
+                    breakpoints: {
+                        /*
+                        Default theme.breakpoints values:
+                        Breakpoint	Viewport width
+                        xs	576px
+                        sm	768px
+                        md	992px
+                        lg	1200px
+                        xl	1400px
+                        */
+                        xs: 500,
+                        sm: 800,
+                        md: 1000,
+                        lg: 1200,
+                        xl: 1400,
+                    },
+                    colors: {
+                        brand: [
+                            '#ec2F4B', //
+                            '#0a9af8',
+                            '#989efb',
+                            '#6171b5',
+                            '#b771b5', //dark: ON HOVER
+                            '#b791b5',
+                            '#ec2F4B', // light: normal
+                            '#ef4F49', // LIGHT: ON hover
+                            '#009FFF', // dark: normal
+                            '#0a9ad8', //dark: ON HOVER
+                        ],
+                    },
+                    primaryColor: 'brand',
+                }}
+            >
                 {element()}
             </MantineProvider>
         </ColorSchemeProvider>

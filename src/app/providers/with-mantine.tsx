@@ -1,15 +1,17 @@
 // HOC-компонент
 import { MantineProvider, ColorSchemeProvider } from '@mantine/core'
-import { useLocalStorage } from '@mantine/hooks'
+import { useLocalStorage, useColorScheme } from '@mantine/hooks'
 
 // eslint-disable-next-line react/display-name
 const withMantine = (element: () => React.ReactNode) => () => {
+    const preferredColorScheme = useColorScheme()
     const [colorScheme, setColorScheme] = useLocalStorage<'dark' | 'light'>({
         key: 'color-scheme',
-        defaultValue: 'dark',
+        defaultValue: preferredColorScheme,
+        getInitialValueInEffect: true,
     })
     const toggleColorScheme = () => setColorScheme((current: string) => (current === 'dark' ? 'light' : 'dark'))
-
+    console.log({ preferredColorScheme })
     return (
         <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
             <MantineProvider

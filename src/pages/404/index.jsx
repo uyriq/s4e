@@ -38,7 +38,7 @@ const NotFound404 = function NotFound404() {
             <div>
                 <h1>Oops! 404 Error</h1>
                 <p>
-                    <h2>{pathname}</h2> The page you requested does not exist
+                    <h2>{pathname.trim().slice(1, -1)}</h2> The page you requested does not exist
                 </p>
                 <br />
                 <br />

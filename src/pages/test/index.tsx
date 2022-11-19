@@ -1,4 +1,4 @@
-import { Text, Button, useMantineColorScheme, ActionIcon, createStyles } from '@mantine/core'
+import { Text, Button, useMantineColorScheme, ActionIcon, createStyles, MantineNumberSize } from '@mantine/core'
 import { IconSun, IconMoonStars } from '@tabler/icons'
 import { useMediaQuery, useLocalStorage, useLogger } from '@mantine/hooks'
 
@@ -19,11 +19,12 @@ const TestPage = () => {
     const { classes } = useStyles()
 
     // TODO логика размеров
+    let reSize: MantineNumberSize = 'sm'
     const smallScreen = useMediaQuery('(max-width: 600px)')
     const mediumScreen = useMediaQuery('(max-width: 900px)')
     const largeScreen = useMediaQuery('(max-width:: 1200px)')
     const extralargeScreen = useMediaQuery('(min-width: 1240px)')
-    const reSize = smallScreen ? 'xs' : extralargeScreen ? 'xl' : largeScreen ? 'lg' : mediumScreen ? 'md' : 'sm'
+    reSize = smallScreen ? 'xs' : extralargeScreen ? 'xl' : largeScreen ? 'lg' : mediumScreen ? 'md' : 'sm'
     let reSizePx
     switch (reSize) {
         case 'xs':

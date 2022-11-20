@@ -18,32 +18,39 @@ const TestPage = () => {
     const { toggleColorScheme } = useMantineColorScheme()
     const { classes } = useStyles()
 
-    // TODO логика размеров
-    let reSize: MantineNumberSize = 'sm'
-    const smallScreen = useMediaQuery('(max-width: 600px)')
-    const mediumScreen = useMediaQuery('(max-width: 900px)')
-    const largeScreen = useMediaQuery('(max-width:: 1200px)')
-    const extralargeScreen = useMediaQuery('(min-width: 1240px)')
-    reSize = smallScreen ? 'xs' : extralargeScreen ? 'xl' : largeScreen ? 'lg' : mediumScreen ? 'md' : 'sm'
-    let reSizePx
-    switch (reSize) {
-        case 'xs':
-            reSizePx = '16px'
+    // логика размеров
+    let reSizePx: string
+    let reSize: MantineNumberSize = 'xs'
+    const extrasmallScreen = useMediaQuery('(min-width: 400px)')
+    const smallScreen = useMediaQuery('(min-width: 600px)')
+    const mediumScreen = useMediaQuery('(min-width: 900px)')
+    const largeScreen = useMediaQuery('(min-width: 1200px)')
+    const extralargeScreen = useMediaQuery('(min-width: 1440px)')
+
+    switch (true) {
+        case extralargeScreen:
+            reSizePx = '128px'
+            reSize = 'xl'
             break
-        case 'sm':
-            reSizePx = '24px'
+        case largeScreen && !extralargeScreen:
+            reSizePx = '96px'
+            reSize = 'lg'
             break
-        case 'md':
-            reSizePx = '32px'
-            break
-        case 'lg':
-            reSizePx = '48px'
-            break
-        case 'xl':
+        case mediumScreen && !largeScreen && !extralargeScreen:
             reSizePx = '64px'
+            reSize = 'md'
+            break
+        case smallScreen && !mediumScreen && !largeScreen && !extralargeScreen:
+            reSizePx = '32px'
+            reSize = 'sm'
+            break
+        case extrasmallScreen && !smallScreen && !mediumScreen && !largeScreen && !extralargeScreen:
+            reSizePx = '16px'
+            reSize = 'xs'
             break
         default:
             reSizePx = '16px'
+            reSize = 'xs'
             break
     }
 
@@ -53,6 +60,7 @@ const TestPage = () => {
     return (
         <div className={classes.container}>
             <ActionIcon
+                size={reSize}
                 variant="outline"
                 color={curentTheme === 'dark' ? 'yellow' : 'blue'}
                 onClick={() => toggleColorScheme()}

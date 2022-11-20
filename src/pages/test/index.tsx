@@ -1,4 +1,12 @@
-import { Text, Button, useMantineColorScheme, ActionIcon, createStyles, MantineNumberSize } from '@mantine/core'
+import {
+    Text,
+    Button,
+    useMantineColorScheme,
+    ActionIcon,
+    createStyles,
+    MantineNumberSize,
+    MantineSizes,
+} from '@mantine/core'
 import { IconSun, IconMoonStars } from '@tabler/icons'
 import { useMediaQuery, useLocalStorage, useLogger } from '@mantine/hooks'
 

@@ -1,4 +1,4 @@
-import { MantineNumberSize, MantineSizes } from '@mantine/core'
+import { MantineNumberSize } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 
 function useResizeLogic() {

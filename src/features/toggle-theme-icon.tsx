@@ -12,6 +12,7 @@ export default function ToggleThemeIcon({ ...leftOver }) {
     const useStyles = createStyles((theme) => ({
         container: {
             accentColor: 'cyan',
+            alignItems: 'center',
         },
     }))
 

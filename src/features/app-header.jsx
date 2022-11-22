@@ -8,16 +8,25 @@ function AppHeader({ opened, setOpened }) {
 
     return (
         <Container size={reSize} px={0}>
-            <Header height={{ base: 50, md: 70 }} p="md">
-                <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                    <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-                        <Burger opened={opened} onClick={() => setOpened((o) => !o)} size="sm" mr="xl" />
-                    </MediaQuery>
-
-                    <Text hidden={!opened}> Some long Application header</Text>
-                </div>
+            <Header height={{ base: 50, md: 70 }} p="md" sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
                 <Group position="right" spacing={reSize}>
-                    <ToggleThemeIcon />
+                    <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                        {' '}
+                        {(reSize === 'xs' || reSize === 'sm') && (
+                            <Burger opened={opened} onClick={() => setOpened((o) => !o)} size={reSize} mr="xl" />
+                        )}
+                        <ToggleThemeIcon size={reSize} mr="xl" />
+                    </div>
+
+                    {(reSize === 'xs' || reSize === 'sm') && (
+                        <Text hidden={!opened} position="left">
+                            {' '}
+                            Some long Application header
+                        </Text>
+                    )}
+                    {(reSize === 'md' || reSize === 'xl' || reSize === 'lg') && (
+                        <Text position="center"> Some long Application header</Text>
+                    )}
                 </Group>
             </Header>
         </Container>

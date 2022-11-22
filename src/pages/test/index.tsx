@@ -1,6 +1,6 @@
 import { Text, Button, useMantineColorScheme } from '@mantine/core'
 import { useLogger } from '@mantine/hooks'
-
+import ArrowHand from '../../features/arrow-hand'
 import useResizeLogic from '../../features/use-resize-logic'
 
 const TestPage = () => {
@@ -16,6 +16,7 @@ const TestPage = () => {
             <Button size={reSize} onClick={() => toggleColorScheme()}>
                 Toggle
             </Button>
+            <ArrowHand arrowDeg={40} />
         </>
     )
 }

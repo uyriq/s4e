@@ -2,9 +2,11 @@ import { NumberInput } from '@mantine/core'
 
 import PropTypes from 'prop-types'
 
-const NumberInputArrow = ({ val = 0, onChange }) => {
+const NumberInputArrow = (props) => {
+    const { val = 0, onChange, ...restofProps } = props
     return (
         <NumberInput
+            {...restofProps}
             value={val}
             min={0}
             max={10}
@@ -18,8 +20,9 @@ const NumberInputArrow = ({ val = 0, onChange }) => {
 }
 
 NumberInputArrow.propTypes = {
-    onChange: PropTypes.func,
-    val: PropTypes.number,
+    restofProps: PropTypes.element,
+    onChange: PropTypes.func.isRequired,
+    val: PropTypes.number.isRequired,
 }
 
 export default NumberInputArrow

@@ -1,6 +1,7 @@
 // HOC-компонент
 import { MantineProvider, ColorSchemeProvider } from '@mantine/core'
 import { useLocalStorage, useColorScheme } from '@mantine/hooks'
+import { CustomFonts } from '../../features/customFonts'
 
 // eslint-disable-next-line react/display-name
 const withMantine = (element: () => React.ReactNode) => () => {
@@ -18,6 +19,7 @@ const withMantine = (element: () => React.ReactNode) => () => {
                 withGlobalStyles
                 withNormalizeCSS
                 theme={{
+                    fontFamily: 'Tajawal, sans-serif',
                     colorScheme,
                     breakpoints: {
                         /*
@@ -52,6 +54,7 @@ const withMantine = (element: () => React.ReactNode) => () => {
                     primaryColor: 'brand',
                 }}
             >
+                <CustomFonts />
                 {element()}
             </MantineProvider>
         </ColorSchemeProvider>

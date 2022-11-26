@@ -149,7 +149,25 @@ const TestPage = () => {
                 <Card>
                     <SimpleGrid cols={2} spacing={reSize}>
                         <Box sx={{}}>
+                            <Text
+                                span
+                                weight={'light'}
+                                color="#bababa"
+                                sx={{
+                                    letterSpacing: 0.9,
+                                    fontFamily: 'Tajawal, sans-serif',
+                                    fontKerning: 'normal',
+                                    fontSize: 32,
+                                    zIndex: 10,
+                                    position: 'absolute',
+                                    top: 50,
+                                    left: 107,
+                                }}
+                            >
+                                15-420772
+                            </Text>
                             <Image src={ImageHot} radius="sm"></Image>
+
                             <Affix position={{ bottom: 820, right: 1800 }}>
                                 <Text color="#000">12345.55</Text>
                             </Affix>

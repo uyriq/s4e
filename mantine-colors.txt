@@ -2,7 +2,7 @@ colors
 
 dark
 :
-["#C1C2C5", "#A6A7AB", "#909296", "#5c5f66", "#373A…]
+
 0
 :
 "#C1C2C5"
@@ -36,7 +36,7 @@ dark
 
 gray
 :
-["#f8f9fa", "#f1f3f5", "#e9ecef", "#dee2e6", "#ced4…]
+
 0
 :
 "#f8f9fa"
@@ -70,7 +70,7 @@ gray
 
 red
 :
-["#fff5f5", "#ffe3e3", "#ffc9c9", "#ffa8a8", "#ff87…]
+
 0
 :
 "#fff5f5"
@@ -104,7 +104,7 @@ red
 
 pink
 :
-["#fff0f6", "#ffdeeb", "#fcc2d7", "#faa2c1", "#f783…]
+
 0
 :
 "#fff0f6"
@@ -138,7 +138,7 @@ pink
 
 grape
 :
-["#f8f0fc", "#f3d9fa", "#eebefa", "#e599f7", "#da77…]
+
 0
 :
 "#f8f0fc"
@@ -172,7 +172,7 @@ grape
 
 violet
 :
-["#f3f0ff", "#e5dbff", "#d0bfff", "#b197fc", "#9775…]
+
 0
 :
 "#f3f0ff"
@@ -206,7 +206,7 @@ violet
 
 indigo
 :
-["#edf2ff", "#dbe4ff", "#bac8ff", "#91a7ff", "#748f…]
+
 0
 :
 "#edf2ff"
@@ -240,7 +240,7 @@ indigo
 
 blue
 :
-["#e7f5ff", "#d0ebff", "#a5d8ff", "#74c0fc", "#4dab…]
+
 0
 :
 "#e7f5ff"
@@ -274,7 +274,7 @@ blue
 
 cyan
 :
-["#e3fafc", "#c5f6fa", "#99e9f2", "#66d9e8", "#3bc9…]
+
 0
 :
 "#e3fafc"
@@ -308,7 +308,7 @@ cyan
 
 teal
 :
-["#e6fcf5", "#c3fae8", "#96f2d7", "#63e6be", "#38d9…]
+
 0
 :
 "#e6fcf5"
@@ -342,7 +342,7 @@ teal
 
 green
 :
-["#ebfbee", "#d3f9d8", "#b2f2bb", "#8ce99a", "#69db…]
+
 0
 :
 "#ebfbee"
@@ -376,7 +376,7 @@ green
 
 lime
 :
-["#f4fce3", "#e9fac8", "#d8f5a2", "#c0eb75", "#a9e3…]
+
 0
 :
 "#f4fce3"
@@ -410,7 +410,7 @@ lime
 
 yellow
 :
-["#fff9db", "#fff3bf", "#ffec99", "#ffe066", "#ffd4…]
+
 0
 :
 "#fff9db"
@@ -444,7 +444,7 @@ yellow
 
 orange
 :
-["#fff4e6", "#ffe8cc", "#ffd8a8", "#ffc078", "#ffa9…]
+
 0
 :
 "#fff4e6"

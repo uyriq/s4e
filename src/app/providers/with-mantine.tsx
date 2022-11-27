@@ -19,6 +19,7 @@ const withMantine = (element: () => React.ReactNode) => () => {
                 withGlobalStyles
                 withNormalizeCSS
                 theme={{
+                    white: '#F1F3F5',
                     fontFamily: 'Tajawal, sans-serif',
                     colorScheme,
                     breakpoints: {

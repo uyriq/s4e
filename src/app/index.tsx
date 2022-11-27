@@ -1,15 +1,22 @@
 import { useState } from 'react'
 import { Routing } from 'pages'
 import { withProviders } from './providers'
-import { AppShell } from '@mantine/core'
+import { AppShell, useMantineTheme } from '@mantine/core'
 
-import AppHeader from '../features/app-header'
+import AppHeeader from '../features/app-header'
+import AppFooter from '../features/app-footer'
 
 const App = () => {
+    const theme = useMantineTheme()
     const [opened, setOpened] = useState(false)
     return (
-        <AppShell header={<AppHeader opened={opened} setOpened={setOpened} />}>
-            {/* Your application here */}
+        <AppShell
+            styles={{}}
+            navbarOffsetBreakpoint="sm"
+            asideOffsetBreakpoint="sm"
+            footer={<AppFooter />}
+            header={<AppHeeader />}
+        >
             <Routing />
         </AppShell>
     )

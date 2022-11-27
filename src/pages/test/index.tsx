@@ -1,8 +1,10 @@
 // главная
 
-import { useState, useEffect } from 'react'
+import { useState, memo } from 'react'
+// import useResizeObserver from "use-resize-observer";
 import InputMask from 'react-input-mask-next'
 import {
+    createStyles,
     Affix,
     Text,
     Switch,
@@ -16,11 +18,17 @@ import {
     Image,
     Center,
     Box,
+    Container,
+    Space,
+    Grid,
 } from '@mantine/core'
-import { useLogger, useId, useUncontrolled } from '@mantine/hooks'
-import { IconCheck, IconX } from '@tabler/icons'
-import { roundto } from 'roundto'
-import NumberInputArrow from '../../features/number-input-arrow'
+
+import { useLogger, useId, useColorScheme } from '@mantine/hooks'
+import useResizeObserver from 'use-resize-observer'
+
+import useScreenshot from 'features/use-screenshot'
+import CounterText from '../../features/counter-text'
+import ControlledCounterDigit from 'features/controlled-counter-digit'
 import NumberInputDigit from '../../features/number-input-digit'
 
 import ArrowHand from '../../features/arrow-hand'
@@ -28,160 +36,322 @@ import { ImageCold, ImageHot } from '../../shared/images'
 import useResizeLogic from '../../features/use-resize-logic'
 import { getCookie, setCookie } from '../../shared/utils'
 
-const TestPage = () => {
+const TestPage = memo(() => {
     const theme = useMantineTheme()
-    const [checked, setChecked] = useState(false)
+    const colorval = useColorScheme() === 'light' ? theme.black : theme.white
     const [hotRegNum, setHotRegNum] = useState<string>('')
     const [coldRegNum, setColdRegNum] = useState<string>('')
-    const [digitHotValue, setdigitHot] = useState<number>(0)
-    const [digitColdValue, setdigitCold] = useState<number>(0)
+    const [hotValue, setValHot] = useState<number>(0)
+    const [digitsHot, setDigitsHot] = useState<number[]>([])
+    const [digitsCold, setDigitsCold] = useState<number[]>([])
+
+    const [coldValue, setValCold] = useState<number>(0)
     const [arrowColdValue, setarrowCold] = useState<number>(0)
     const [arrowHotValue, setarrowHot] = useState<number>(0)
 
-    const { reSizePx, reSize, reSizeNum } = useResizeLogic()
+    const { reSizePx, reSize } = useResizeLogic()
     const id = useId()
 
-    //  (2.256 % 1).toFixed(3).substring(3).at(-1) => 6
+    const { ref: wrapperRef, width, height } = useResizeObserver<HTMLDivElement>()
+    //@ts-expect-errors
+    const hk = width >= 648 ? 0.29 : 0.155
+    //@ts-expect-errors
+    const wk = width >= 648 ? 410 / width : 400 / width
 
-    useEffect(() => {
-        return () => {}
-    }, [])
+    const { generateImage, captureRef1, captureRef2, status } = useScreenshot()
+
+    const useStyles = createStyles((theme) => ({
+        leftBox: {
+            backgroundImage: `linear-gradient(20deg, transparent, 'blue', 'red', 'orange', 'cyan', 'white'))`,
+            position: 'relative',
+            minWidth: 100,
+        },
+        rightBox: {
+            backgroundImage: `linear-gradient(20deg, transparent, 'blue', 'red', 'orange', 'cyan', 'white'))`,
+            position: 'relative',
+            minWidth: 100,
+        },
+    }))
+
+    const { classes } = useStyles()
 
     function onChangedigitHot(val: number) {
         //@ts-expect-error
-        let arrow = parseInt((val % 1).toFixed(3).substring(3).at(-1), 10)
-
+        let arrow = parseInt((val % 1).toFixed(4).substring(4).at(-1), 10) % 10
         setarrowHot(arrow)
-        return setdigitHot(val || 0)
+        setDigitsHot(
+            (Math.trunc(val) + ((val - arrow / 10000) % 1).toFixed(3).slice(1))
+                .padStart(9, '0')
+                .split('')
+                .map(Number)
+                .filter((x: number) => {
+                    // eslint-disable-next-line no-self-compare
+                    return x === x || x === 0
+                })
+        )
+        return setValHot(val || 0)
     }
-
-    /*     function onChangearrowHot(val: number) {
-        setdigitHot(roundto(digitHotValue, 2, 'floor') + val / 1000)
-        return setarrowHot(val)
-    } */
 
     function onChangedigitCold(val: number) {
         //@ts-expect-error
-        let arrow = parseInt((val % 1).toFixed(3).substring(3).at(-1), 10)
+        let arrow = parseInt((val % 1).toFixed(4).substring(4).at(-1), 10) % 10
         setarrowCold(arrow)
-        return setdigitCold(val || 0)
-    }
+        setDigitsCold(
+            (Math.trunc(val) + ((val - arrow / 10000) % 1).toFixed(3).slice(1))
+                .padStart(9, '0')
+                .split('')
+                .map(Number)
+                .filter((x: number) => {
+                    // eslint-disable-next-line no-self-compare
+                    return x === x || x === 0
+                })
+        )
 
-    /*     function onChangearrowCold(val: number) {
-        setdigitCold(roundto(digitColdValue, 2, 'floor') + val / 1000)
-        return setarrowCold(val || 0)
-    } */
+        return setValCold(val || 0)
+    }
 
     useLogger('TestPage: ', [
         'reSize: ',
         reSize,
         reSizePx,
         'cold',
-        digitColdValue,
+        coldValue,
         arrowColdValue,
         'hot',
-        digitHotValue,
+        hotValue,
         arrowHotValue,
+        'digits',
+        digitsHot,
+        'sizes',
+        width,
+        height,
     ])
-
+    /*@ts-expect-error  */
+    const forspan = width < 600 ? 'content' : 'auto'
     return (
         <>
-            <Group position="center">
-                <Switch
-                    checked={checked}
-                    onChange={(event) => setChecked(event.currentTarget.checked)}
-                    color="blue"
-                    size={reSize}
-                    label="сохранять значения ввода для будущего использования"
-                    description="использовать куки браузера, чтобы получить предыдущие показания счетчиков"
-                    thumbIcon={
-                        checked ? (
-                            <IconCheck
-                                size={reSizeNum / 4}
-                                color={theme.colors.blue[theme.fn.primaryShade()]}
-                                stroke={3}
-                            />
-                        ) : (
-                            <IconX size={reSizeNum / 4} color={theme.colors.red[theme.fn.primaryShade()]} stroke={3} />
-                        )
-                    }
-                />
-            </Group>
-            <SimpleGrid cols={2} spacing={reSize}>
-                <InputBase
-                    size={reSize}
-                    id={id}
-                    label="ГВ номер счётчика"
-                    mask="**-******"
-                    component={InputMask}
-                    // value={_value}
-                    // onChange={(event) => handleChange(event.currentTarget.value)}
-                ></InputBase>
-                <InputBase
-                    size={reSize}
-                    id={id}
-                    label="ХВ номер счётчика"
-                    mask="**-******"
-                    component={InputMask}
-                ></InputBase>
-                <NumberInputDigit /*@ts-expect-error как типизировать передачу свободных пропсов?  */
-                    size={reSize}
-                    id={id}
-                    label="ГВ показания"
-                    onChange={onChangedigitHot}
-                    val={0 || digitHotValue}
-                ></NumberInputDigit>
-                <NumberInputDigit
-                    /*@ts-expect-error как типизировать передачу свободных пропсов?  */
-                    size={reSize}
-                    id={id}
-                    label="ХВ показания"
-                    onChange={onChangedigitCold}
-                    val={0 || digitColdValue}
-                ></NumberInputDigit>
-            </SimpleGrid>
-            <SimpleGrid cols={2} spacing={reSize}>
-                <ArrowHand arrowDeg={((arrowHotValue || 0) % 10) * 36} />
-                <ArrowHand arrowDeg={((arrowColdValue || 0) % 10) * 36} />
-            </SimpleGrid>
-
-            <Center>
-                <Card>
-                    <SimpleGrid cols={2} spacing={reSize}>
-                        <Box sx={{}}>
-                            <Text
-                                span
-                                weight={'light'}
-                                color="#bababa"
-                                sx={{
-                                    letterSpacing: 0.9,
-                                    fontFamily: 'Tajawal, sans-serif',
-                                    fontKerning: 'normal',
-                                    fontSize: 32,
-                                    zIndex: 10,
-                                    position: 'absolute',
-                                    top: 50,
-                                    left: 107,
-                                }}
-                            >
-                                15-420772
-                            </Text>
-                            <Image src={ImageHot} radius="sm"></Image>
-
-                            <Affix position={{ bottom: 820, right: 1800 }}>
-                                <Text color="#000">12345.55</Text>
-                            </Affix>
-                        </Box>
-                        <Box sx={{}}>
-                            <Image src={ImageCold} radius="sm">
-                                <Text color="#000">12345.55</Text>
-                            </Image>
-                        </Box>
-                    </SimpleGrid>
-                </Card>
-            </Center>
+            <Container ref={wrapperRef}>
+                <Center>
+                    <Box
+                        sx={{
+                            alignContent: 'center',
+                        }}
+                    >
+                        <Grid align="center" justify={'center'}>
+                            <Grid.Col span={forspan}>
+                                <InputBase
+                                    p={25}
+                                    size={reSize}
+                                    id={id}
+                                    label="ГВ номер счётчика"
+                                    mask="**-******"
+                                    component={InputMask}
+                                    value={'' || hotRegNum}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                                        setHotRegNum(event.currentTarget.value)
+                                    }
+                                ></InputBase>
+                                <NumberInputDigit /*@ts-expect-error */
+                                    p={25}
+                                    size={reSize}
+                                    id={id}
+                                    label="ГВ показания"
+                                    description="четвертая цифра после запятой двигает стрелочку"
+                                    onChange={onChangedigitHot}
+                                    val={0 || hotValue}
+                                ></NumberInputDigit>
+                                <Box
+                                    /* @ts-expect-error */
+                                    ref={captureRef1}
+                                    className={classes.leftBox}
+                                >
+                                    {/* номер hot   */}
+                                    <CounterText
+                                        color="#4f4848"
+                                        sx={{
+                                            letterSpacing: 0.1,
+                                            opacity: 0.3,
+                                            fontFamily: 'Tajawal, sans-serif',
+                                            fontKerning: 'normal',
+                                            fontSize: 34,
+                                            /*@ts-expect-error */
+                                            top: (0.52 * hk * height) / 2,
+                                            /*@ts-expect-error */
+                                            left: (1.25 * wk * width) / 4,
+                                            zIndex: 10,
+                                            position: 'absolute',
+                                            backdropFilter: 'blur(1px)',
+                                            textShadow: '1px 1px 1px rgba(0,0,0,.4), -1px -1px 0 rgba(255,255,255,.1)',
+                                        }}
+                                    >
+                                        {hotRegNum}
+                                    </CounterText>
+                                    <Box
+                                        sx={{
+                                            position: 'absolute',
+                                            zIndex: 11,
+                                            opacity: 0.8,
+                                            /*@ts-expect-error */
+                                            top: (1.75 * hk * height) / 2,
+                                            /*@ts-expect-error */
+                                            left: (2.6 * wk * width) / 4,
+                                        }}
+                                    >
+                                        {/* стрелка hot   */}
+                                        <ArrowHand
+                                            color="#973341"
+                                            arrowDeg={((arrowHotValue || 0) % 10) * 36}
+                                            /* @ts-expect-error */
+                                            sx={{
+                                                opacity: 0.9,
+                                                position: 'absolute',
+                                                backdropFilter: 'blur(1px)',
+                                                textShadow:
+                                                    '1px 1px 1px rgba(0,0,0,.4), -1px -1px 0 rgba(255,255,255,.1)',
+                                            }}
+                                        />
+                                    </Box>
+                                    <ControlledCounterDigit
+                                        /*@ts-expect-error */
+                                        top={(hk * height) / 2}
+                                        /*@ts-expect-error */
+                                        left={(10 + wk * width) / 4}
+                                        /*@ts-expect-error  */
+                                        spaceBetween={28 - 1 * Number(!!(width < 648))}
+                                        digitsArray={digitsHot}
+                                        color="#4f4848"
+                                    />
+                                    <Image
+                                        p={10}
+                                        fit="contain"
+                                        src={ImageHot}
+                                        radius="xs"
+                                        withPlaceholder
+                                        placeholder={<Text align="center">Счетчик горячей воды</Text>}
+                                        caption="Счетчик горячей воды"
+                                    ></Image>
+                                </Box>
+                                <Center>
+                                    <Button
+                                        loading={status === 'loading'}
+                                        onClick={(e: React.SyntheticEvent) => generateImage(e, 1)}
+                                    >
+                                        Скачать Г.
+                                    </Button>
+                                </Center>
+                            </Grid.Col>
+                            <Grid.Col span={forspan}>
+                                <InputBase
+                                    p={25}
+                                    size={reSize}
+                                    id={id}
+                                    label="ХВ номер счётчика"
+                                    mask="**-******"
+                                    component={InputMask}
+                                    value={'' || coldRegNum}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                                        setColdRegNum(event.currentTarget.value)
+                                    }
+                                ></InputBase>
+                                <NumberInputDigit
+                                    /*@ts-expect-error */
+                                    size={reSize}
+                                    p={25}
+                                    id={id}
+                                    label="ХВ показания"
+                                    description="четвертая цифра после запятой двигает стрелочку"
+                                    onChange={onChangedigitCold}
+                                    val={0 || coldValue}
+                                ></NumberInputDigit>
+                                {/* eslint-disable @typescript-eslint/no-unused-vars */}
+                                {/* @ts-ignore */}
+                                <Box
+                                    /*@ts-expect-error */
+                                    ref={captureRef2}
+                                    className={classes.rightBox}
+                                >
+                                    {/* номер cold   */}
+                                    <CounterText
+                                        color="#4f4848"
+                                        sx={{
+                                            letterSpacing: 0.1,
+                                            opacity: 0.3,
+                                            fontFamily: 'Tajawal, sans-serif',
+                                            fontKerning: 'normal',
+                                            fontSize: 33,
+                                            zIndex: 10,
+                                            position: 'absolute',
+                                            /*@ts-expect-error */
+                                            top: (0.6 * hk * height) / 2,
+                                            /*@ts-expect-error */
+                                            left: (1.32 * wk * width) / 4,
+                                            backdropFilter: 'blur(1px)',
+                                            textShadow: '1px 1px 1px rgba(0,0,0,.4), -1px -1px 0 rgba(255,255,255,.1)',
+                                        }}
+                                    >
+                                        {coldRegNum}
+                                    </CounterText>
+                                    <Box
+                                        sx={{
+                                            position: 'absolute',
+                                            zIndex: 11,
+                                            opacity: 0.9,
+                                            /*@ts-expect-error */
+                                            top: (1.76 * hk * height) / 2,
+                                            /*@ts-expect-error */
+                                            left: (2.7 * wk * width) / 4,
+                                        }}
+                                    >
+                                        {/* стрелка cold   */}
+                                        <ArrowHand
+                                            color="#9b4444"
+                                            arrowDeg={((arrowColdValue || 0) % 10) * 36}
+                                            /* @ts-expect-error */
+                                            sx={{
+                                                opacity: 0.9,
+                                                position: 'absolute',
+                                                backdropFilter: 'blur(1px)',
+                                                textShadow:
+                                                    '1px 1px 1px rgba(0,0,0,1), -1px -1px 0 rgba(255,255,255,.1)',
+                                            }}
+                                        />
+                                    </Box>
+                                    <ControlledCounterDigit
+                                        /*@ts-expect-error */
+                                        top={(1.07 * hk * height) / 2}
+                                        /*@ts-expect-error */
+                                        left={(15 + wk * width) / 4}
+                                        /*@ts-expect-error*/
+                                        spaceBetween={28 - 1 * Number(!!(width < 648))}
+                                        digitsArray={digitsCold}
+                                        color="#4f4848"
+                                    />
+                                    <Image
+                                        p={10}
+                                        fit="contain"
+                                        src={ImageCold}
+                                        radius="xs"
+                                        withPlaceholder
+                                        placeholder={<Text align="center">Счетчик холодной воды</Text>}
+                                        caption="Счетчик холодной воды"
+                                    ></Image>
+                                </Box>
+                                <Center>
+                                    <Button
+                                        loading={status === 'loading'}
+                                        onClick={(e: React.SyntheticEvent) => generateImage(e, 2)}
+                                    >
+                                        Скачать Х.
+                                    </Button>
+                                </Center>
+                            </Grid.Col>
+                        </Grid>
+                    </Box>
+                </Center>
+            </Container>
         </>
     )
-}
+})
 
+TestPage.displayName = 'TestPage'
 export default TestPage

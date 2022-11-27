@@ -2,7 +2,6 @@ import { MantineNumberSize } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 
 function useResizeLogic() {
-    // логика размеров
     let reSizePx: string
     let reSize: MantineNumberSize = 'xs'
     let reSizeNum: number
@@ -16,7 +15,7 @@ function useResizeLogic() {
     switch (true) {
         case extralargeScreen:
             reSizePx = '128px'
-            reSize = 'xl'
+            reSize = 'lg'
             reSizeNum = 128
             break
         case largeScreen && !extralargeScreen:
@@ -26,7 +25,7 @@ function useResizeLogic() {
             break
         case mediumScreen && !largeScreen && !extralargeScreen:
             reSizePx = '64px'
-            reSize = 'md'
+            reSize = 'sm'
             reSizeNum = 64
             break
         case smallScreen && !mediumScreen && !largeScreen && !extralargeScreen:

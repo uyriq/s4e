@@ -13,7 +13,8 @@ const NumberInputDigit = (props) => {
             stepHoldDelay={500}
             stepHoldInterval={(t) => Math.max(1000 / t ** 2, 25)}
             step={0.001}
-            precision={3}
+            precision={4}
+            decimalSeparator=","
             onChange={onChange}
         />
     )

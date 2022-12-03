@@ -1,9 +1,9 @@
 import { Affix, Burger, Center, Container, Flex, Header, Text, Space } from '@mantine/core'
 import PropTypes from 'prop-types'
 import useResizeObserver from 'use-resize-observer'
-import useResizeLogic from './use-resize-logic'
-import ToggleThemeIcon from './toggle-theme-icon'
-import SwithElement from './switch-element'
+import useResizeLogic from '../features/use-resize-logic'
+import ToggleThemeIcon from '../features/toggle-theme-icon'
+import SwithElement from '../features/switch-element'
 
 function AppHeader() {
     const { reSize } = useResizeLogic()

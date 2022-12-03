@@ -8,18 +8,25 @@ import { toPng } from 'html-to-image'
 function useScreenshot() {
     const captureRef1 = useRef()
     const captureRef2 = useRef()
-    let choiceRef
-    let choiceFname
+    const [fileName, setFileName] = useState('undefined.PNG')
     const [status, setStatus] = useState('idle')
+    let choiceRef
+
+    const UUID = (function UUIDGeneratorBrowser() {
+        return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11)
+            .replace(/[018]/g, (c) =>
+                (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)
+            )
+            .split('-')[0]
+    })()
 
     const curdate = (function getDate() {
         let d = new Date()
         let dformat = d.toISOString().split('T')[0]
-        return '_' + dformat
+        return '' + dformat
     })()
-    //    console.log(curdate)
-    const [fileName, setFileName] = useState(curdate + '.PNG')
-    async function generateImage(e, arg = 1) {
+    console.log(UUID)
+    async function generateImage(e, arg = 1, isRandomFname) {
         console.log(arg)
 
         e.preventDefault()
@@ -27,15 +34,11 @@ function useScreenshot() {
         switch (arg) {
             case 2: {
                 choiceRef = captureRef2
-                choiceFname = curdate + '_ХВ' + '.png'
-                setFileName(choiceFname)
                 break
             }
             case 1:
             default: {
                 choiceRef = captureRef1
-                choiceFname = curdate + '_ГВ' + '.png'
-                setFileName(choiceFname)
                 break
             }
         }
@@ -44,34 +47,20 @@ function useScreenshot() {
             return
         }
 
+        isRandomFname ? setFileName(UUID + '.png') : setFileName(curdate + '.png')
         try {
             setStatus('loading')
             const imgBase64 = await toPng(choiceRef.current, {
                 quality: 1,
                 pixelRatio: 1,
             })
-
             download(imgBase64, fileName)
             setStatus('success')
         } catch (error) {
             setStatus('error')
             console.error(error)
         } finally {
-            switch (arg) {
-                case 2: {
-                    choiceRef = captureRef2
-                    choiceFname = curdate + '_ХВ' + '.png'
-                    setFileName(choiceFname)
-                    break
-                }
-                case 1:
-                default: {
-                    choiceRef = captureRef1
-                    choiceFname = curdate + '_ГВ' + '.png'
-                    setFileName(choiceFname)
-                    break
-                }
-            }
+            choiceRef = null
         }
     }
 

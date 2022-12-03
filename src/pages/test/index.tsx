@@ -1,9 +1,10 @@
 // главная
 
-import { useState, memo } from 'react'
+import { useState, useEffect, useRef, memo } from 'react'
 // import useResizeObserver from "use-resize-observer";
 import InputMask from 'react-input-mask-next'
 import {
+    Tooltip,
     createStyles,
     Affix,
     Text,
@@ -23,22 +24,24 @@ import {
     Grid,
 } from '@mantine/core'
 
-import { useLogger, useId, useColorScheme } from '@mantine/hooks'
+import { useLogger, useId, useColorScheme, useLocalStorage } from '@mantine/hooks'
 import useResizeObserver from 'use-resize-observer'
 
 import useScreenshot from 'features/use-screenshot'
 import CounterText from '../../features/counter-text'
+
 import ControlledCounterDigit from 'features/controlled-counter-digit'
 import NumberInputDigit from '../../features/number-input-digit'
 
 import ArrowHand from '../../features/arrow-hand'
 import { ImageCold, ImageHot } from '../../shared/images'
 import useResizeLogic from '../../features/use-resize-logic'
-import { getCookie, setCookie } from '../../shared/utils'
+import { getCookies, getCookie, setCookie, deleteCookie } from 'cookies-next'
 
 const TestPage = memo(() => {
-    const theme = useMantineTheme()
-    const colorval = useColorScheme() === 'light' ? theme.black : theme.white
+    const [isRandomFname] = useLocalStorage({ key: 'isRandomFname' })
+
+    const buttonRef = useRef(null)
     const [hotRegNum, setHotRegNum] = useState<string>('')
     const [coldRegNum, setColdRegNum] = useState<string>('')
     const [hotValue, setValHot] = useState<number>(0)
@@ -76,6 +79,7 @@ const TestPage = memo(() => {
     const { classes } = useStyles()
 
     function onChangedigitHot(val: number) {
+        if (val > 99999) val = 99999 // потолок
         //@ts-expect-error
         let arrow = parseInt((val % 1).toFixed(4).substring(4).at(-1), 10) % 10
         setarrowHot(arrow)
@@ -93,6 +97,7 @@ const TestPage = memo(() => {
     }
 
     function onChangedigitCold(val: number) {
+        if (val > 99999) val = 99999 // потолок
         //@ts-expect-error
         let arrow = parseInt((val % 1).toFixed(4).substring(4).at(-1), 10) % 10
         setarrowCold(arrow)
@@ -125,9 +130,21 @@ const TestPage = memo(() => {
         'sizes',
         width,
         height,
+        isRandomFname,
     ])
-    /*@ts-expect-error  */
+    /*@ts-expect-error
+    тюнинг-стиль на мобильных
+    */
+    /*@ts-expect-error*/
     const forspan = width < 600 ? 'content' : 'auto'
+
+    useEffect(() => {
+        /*@ts-expect-error*/
+        buttonRef.current.click()
+        return () => {}
+        /* как бы ворк о'раунд, TODO - асинхрон */
+    }, [isRandomFname])
+
     return (
         <>
             <Container ref={wrapperRef}>
@@ -151,15 +168,17 @@ const TestPage = memo(() => {
                                         setHotRegNum(event.currentTarget.value)
                                     }
                                 ></InputBase>
-                                <NumberInputDigit /*@ts-expect-error */
-                                    p={25}
-                                    size={reSize}
-                                    id={id}
-                                    label="ГВ показания"
-                                    description="четвертая цифра после запятой двигает стрелочку"
-                                    onChange={onChangedigitHot}
-                                    val={0 || hotValue}
-                                ></NumberInputDigit>
+                                <Tooltip label="четвертая цифра после запятой двигает стрелочку">
+                                    <NumberInputDigit /*@ts-expect-error */
+                                        p={25}
+                                        decimalSeparator=","
+                                        size={reSize}
+                                        id={id}
+                                        label="ГВ показания"
+                                        onChange={onChangedigitHot}
+                                        val={hotValue}
+                                    ></NumberInputDigit>
+                                </Tooltip>
                                 <Box
                                     /* @ts-expect-error */
                                     ref={captureRef1}
@@ -217,7 +236,7 @@ const TestPage = memo(() => {
                                         /*@ts-expect-error */
                                         left={(10 + wk * width) / 4}
                                         /*@ts-expect-error  */
-                                        spaceBetween={28 - 1 * Number(!!(width < 648))}
+                                        spaceBetween={27 - 1 * Number(!!(width < 648))}
                                         digitsArray={digitsHot}
                                         color="#4f4848"
                                     />
@@ -233,10 +252,11 @@ const TestPage = memo(() => {
                                 </Box>
                                 <Center>
                                     <Button
+                                        ref={buttonRef}
                                         loading={status === 'loading'}
-                                        onClick={(e: React.SyntheticEvent) => generateImage(e, 1)}
+                                        onClick={(e: React.SyntheticEvent) => generateImage(e, 1, isRandomFname)}
                                     >
-                                        Скачать Г.
+                                        Скачать
                                     </Button>
                                 </Center>
                             </Grid.Col>
@@ -253,16 +273,17 @@ const TestPage = memo(() => {
                                         setColdRegNum(event.currentTarget.value)
                                     }
                                 ></InputBase>
-                                <NumberInputDigit
-                                    /*@ts-expect-error */
-                                    size={reSize}
-                                    p={25}
-                                    id={id}
-                                    label="ХВ показания"
-                                    description="четвертая цифра после запятой двигает стрелочку"
-                                    onChange={onChangedigitCold}
-                                    val={0 || coldValue}
-                                ></NumberInputDigit>
+                                <Tooltip label="четвертая цифра после запятой двигает стрелочку">
+                                    <NumberInputDigit
+                                        /*@ts-expect-error */
+                                        size={reSize}
+                                        p={25}
+                                        id={id}
+                                        label="ХВ показания"
+                                        onChange={onChangedigitCold}
+                                        val={0 || coldValue}
+                                    ></NumberInputDigit>
+                                </Tooltip>
                                 {/* eslint-disable @typescript-eslint/no-unused-vars */}
                                 {/* @ts-ignore */}
                                 <Box
@@ -322,7 +343,7 @@ const TestPage = memo(() => {
                                         /*@ts-expect-error */
                                         left={(15 + wk * width) / 4}
                                         /*@ts-expect-error*/
-                                        spaceBetween={28 - 1 * Number(!!(width < 648))}
+                                        spaceBetween={27 - 1 * Number(!!(width < 648))}
                                         digitsArray={digitsCold}
                                         color="#4f4848"
                                     />
@@ -339,9 +360,9 @@ const TestPage = memo(() => {
                                 <Center>
                                     <Button
                                         loading={status === 'loading'}
-                                        onClick={(e: React.SyntheticEvent) => generateImage(e, 2)}
+                                        onClick={(e: React.SyntheticEvent) => generateImage(e, 2, isRandomFname)}
                                     >
-                                        Скачать Х.
+                                        Скачать
                                     </Button>
                                 </Center>
                             </Grid.Col>

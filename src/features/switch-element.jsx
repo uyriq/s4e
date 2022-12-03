@@ -18,7 +18,7 @@ const SwithElement = () => {
             labelPosition="right"
             label="сохранять введенные значения"
             /* только на большом экране подсказка */
-            description={reSizeNum > 64 ? 'чтобы получить начальные показания счетчиков, из кук браузера' : ''}
+            description={reSizeNum > 64 ? 'получить начальные показания счетчиков, из кук браузера' : ''}
             thumbIcon={
                 checked ? (
                     <IconCheck size={reSizeNum / 4} color={theme.colors.blue[theme.fn.primaryShade()]} stroke={3} />

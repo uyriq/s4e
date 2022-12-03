@@ -34,7 +34,7 @@ import ControlledCounterDigit from 'features/controlled-counter-digit'
 import NumberInputDigit from '../../features/number-input-digit'
 
 import ArrowHand from '../../features/arrow-hand'
-import { ImageCold, ImageHot } from '../../shared/images'
+import { ImageCold, ImageHot, backNoise } from '../../shared/images'
 import useResizeLogic from '../../features/use-resize-logic'
 import { getCookies, getCookie, setCookie, deleteCookie } from 'cookies-next'
 

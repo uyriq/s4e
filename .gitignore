@@ -3,7 +3,7 @@
 orig.webp
 strelk.svg
 стрелкаarr.svg
-
+src/features/counter-digit.jsx
 # dependencies
 /node_modules
 

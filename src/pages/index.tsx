@@ -9,7 +9,7 @@ const NotFound404 = lazy(() => import('./404/index'))
 export const Routing = () => {
     return (
         <Switch>
-            <Route path="/" element={<TestPage />} />
+            <Route path="/s4e" element={<TestPage />} />
             <Route path="*" element={<NotFound404 />} />
         </Switch>
     )

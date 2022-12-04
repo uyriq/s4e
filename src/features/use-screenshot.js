@@ -26,7 +26,7 @@ function useScreenshot() {
         return '' + dformat
     })()
     console.log(UUID)
-    async function generateImage(e, arg = 1, isRandomFname) {
+    async function generateImage(e, arg = 0, isRandomFname) {
         console.log(arg)
 
         e.preventDefault()
@@ -54,7 +54,7 @@ function useScreenshot() {
                 quality: 1,
                 pixelRatio: 1,
             })
-            download(imgBase64, fileName)
+            e.isTrusted && download(imgBase64, fileName)
             setStatus('success')
         } catch (error) {
             setStatus('error')

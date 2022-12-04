@@ -141,8 +141,9 @@ const TestPage = memo(() => {
     useEffect(() => {
         /*@ts-expect-error*/
         buttonRef.current.click()
+        /* ⬆️ ворк-о'раунд,
+        fixed issue #1 исправить асинхрон useState в useScreenshot (https://www.reddit.com/r/javascript/comments/4rutq2/comment/d54chcb/) */
         return () => {}
-        /* как бы ворк о'раунд, TODO - асинхрон */
     }, [isRandomFname])
 
     return (

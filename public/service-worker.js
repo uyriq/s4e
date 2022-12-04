@@ -15,7 +15,7 @@
         - Push Notifications: https://microsoft.github.io/win-student-devs/#/30DaysOfPWA/advanced-capabilities/07?id=push-notifications-on-the-web
         - Badges: https://microsoft.github.io/win-student-devs/#/30DaysOfPWA/advanced-capabilities/07?id=application-badges
     */
-
+// eslint-disable-next-line no-restricted-globals
 const HOSTNAME_WHITELIST = [self.location.hostname, 'fonts.gstatic.com', 'fonts.googleapis.com', 'cdn.jsdelivr.net']
 
 // The Util Function to hack URLs of intercepted requests
@@ -27,6 +27,8 @@ const getFixedUrl = (req) => {
     // Just keep syncing with location.protocol
     // fetch(httpURL) belongs to active mixed content.
     // And fetch(httpRequest) is not supported yet.
+
+    // eslint-disable-next-line no-restricted-globals
     url.protocol = self.location.protocol
 
     // 2. add query for caching-busting.
@@ -34,6 +36,7 @@ const getFixedUrl = (req) => {
     // max-age on mutable content is error-prone, with SW life of bugs can even extend.
     // Until cache mode of Fetch API landed, we have to workaround cache-busting with query string.
     // Cache-Control-Bug: https://bugs.chromium.org/p/chromium/issues/detail?id=453190
+    // eslint-disable-next-line no-restricted-globals
     if (url.hostname === self.location.hostname) {
         url.search += (url.search ? '&' : '?') + 'cache-bust=' + now
     }
@@ -46,7 +49,9 @@ const getFixedUrl = (req) => {
  *
  *  waitUntil(): activating ====> activated
  */
+// eslint-disable-next-line no-restricted-globals
 self.addEventListener('activate', (event) => {
+    // eslint-disable-next-line no-restricted-globals
     event.waitUntil(self.clients.claim())
 })
 
@@ -56,6 +61,7 @@ self.addEventListener('activate', (event) => {
  *
  *  void respondWith(Promise<Response> r)
  */
+// eslint-disable-next-line no-restricted-globals
 self.addEventListener('fetch', (event) => {
     // Skip some of cross-origin requests, like those for Google Analytics.
     if (HOSTNAME_WHITELIST.indexOf(new URL(event.request.url).hostname) > -1) {

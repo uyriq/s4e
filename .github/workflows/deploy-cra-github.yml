@@ -1,46 +1,20 @@
-# name: Deploy Starter to GitHub Pages
-
-# on:
-#     workflow_dispatch:
-
-# jobs:
-#     build:
-#         runs-on: ubuntu-latest
-
-#         steps:
-#             - uses: actions/checkout@v3
-
-#             - name: Setup Node
-#               uses: actions/setup-node@v3
-#               with:
-#                   node-version: '16.16'
-
-#             - name: Install Dependencies
-#               run: npm install
-
-#             - name: webpack Build
-#               run: CI= npm run build -- --base=${{ github.event.repository.name }}
-
-#             - name: GitHub Pages action
-#               uses: peaceiris/actions-gh-pages@v3.9.0
-#               with:
-#                   publish_dir: ./build
-#                   github_token: ${{ secrets.GITHUB_TOKEN }}
-
 name: GitHub Pages
 
 on:
-    push:
+    pull_request:
+        types:
+            - closed
         branches:
             - main
-    pull_request:
     workflow_dispatch:
 
 jobs:
-    deploy:
-        runs-on: ubuntu-22.04
+    deploy_if_merged:
+        if: github.event.pull_request.merged == true
+        runs-on: ubuntu-latest
         permissions:
             contents: write
+            pull-requests: read
         concurrency:
             group: ${{ github.workflow }}-${{ github.ref }}
         steps:
@@ -59,12 +33,14 @@ jobs:
                   restore-keys: |
                       ${{ runner.os }}-node-
 
+            # not production! CI=
+
             - run: CI= npm ci
             - run: CI= npm run build
 
             - name: Deploy
-              uses: peaceiris/actions-gh-pages@v3
+              uses: peaceiris/actions-gh-pages@v3.9.0
               if: ${{ github.ref == 'refs/heads/main' }}
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
-                  publish_dir: ./public
+                  publish_dir: ./build

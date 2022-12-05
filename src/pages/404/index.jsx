@@ -1,10 +1,10 @@
-import { useEffect } from 'react'
 import { useNavigate, Link, useLocation } from 'react-router-dom'
 import { createStyles, Box, Center } from '@mantine/core'
 
 import { Breadcrumbs, Anchor } from '@mantine/core'
 
 const NotFound404 = function NotFound404() {
+    // eslint-disable-next-line no-unused-vars
     const navigate = useNavigate() //TODO
     const { pathname } = useLocation()
     const useStyles = createStyles((theme) => ({

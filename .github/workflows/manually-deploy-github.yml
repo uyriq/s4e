@@ -1,29 +1,22 @@
-name: GitHub Pages
+name: GitHub Pages, manually
 
 on:
-    pull_request:
+    workflow_dispatch:
         branches:
             - main
-        types:
-            - closed
-    workflow_dispatch:
 
 jobs:
-    deploy_merged:
-        runs-on: ubuntu-latest
+    deploy:
+        runs-on: ubuntu-22.04
         permissions:
             contents: write
-            pull-requests: write
-            deployments: write
-            pages: write
-
         concurrency:
             group: ${{ github.workflow }}-${{ github.ref }}
         steps:
             - uses: actions/checkout@v3
 
             - name: Setup Node
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v3.0.4
               with:
                   node-version: '16.16'
 
@@ -35,14 +28,12 @@ jobs:
                   restore-keys: |
                       ${{ runner.os }}-node-
 
-            # not production! CI=
-
             - run: CI= npm ci
             - run: CI= npm run build
 
             - name: Deploy
               uses: peaceiris/actions-gh-pages@v3.9.0
-              #  if: ${{ github.ref == 'refs/heads/main' }}
+              if: ${{ github.ref == 'refs/heads/main' }}
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   publish_dir: ./build

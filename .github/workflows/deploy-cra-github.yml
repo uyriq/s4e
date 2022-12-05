@@ -2,19 +2,21 @@ name: GitHub Pages
 
 on:
     pull_request:
-        types:
-            - closed
         branches:
             - main
+        types:
+            - closed
     workflow_dispatch:
 
 jobs:
     deploy_if_merged:
-        if: github.event.pull_request.merged == true
         runs-on: ubuntu-latest
         permissions:
             contents: write
-            pull-requests: read
+            pull-requests: write
+            deployments: write
+            pages: write
+
         concurrency:
             group: ${{ github.workflow }}-${{ github.ref }}
         steps:
@@ -23,7 +25,7 @@ jobs:
             - name: Setup Node
               uses: actions/setup-node@v3
               with:
-                  node-version: '16'
+                  node-version: '16.16'
 
             - name: Cache dependencies
               uses: actions/cache@v3
@@ -40,7 +42,7 @@ jobs:
 
             - name: Deploy
               uses: peaceiris/actions-gh-pages@v3.9.0
-              if: ${{ github.ref == 'refs/heads/main' }}
+              #  if: ${{ github.ref == 'refs/heads/main' }}
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   publish_dir: ./build

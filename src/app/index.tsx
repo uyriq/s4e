@@ -8,13 +8,14 @@ import AppFooter from '../entities/app-footer'
 
 const App = () => {
     const theme = useMantineTheme()
-    const [opened, setOpened] = useState(false)
+    const [opened, setOpened] = useState(true)
     return (
         <AppShell
             styles={{}}
             navbarOffsetBreakpoint="sm"
             asideOffsetBreakpoint="sm"
-            footer={<AppFooter />}
+            //@ts-expect-error
+            footer={opened && <AppFooter />}
             header={<AppHeeader />}
         >
             <Routing />

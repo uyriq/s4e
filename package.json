@@ -3,7 +3,7 @@
     "description": "s4et4iki",
     "version": "0.0.1",
     "private": true,
-    "homepage": "https://uyriq.github.io/s4e/",
+    "homepage": "https://uyriq.github.io/s4e",
     "main": "src/index.tsx",
     "dependencies": {
         "@emotion/react": "^11.10.5",

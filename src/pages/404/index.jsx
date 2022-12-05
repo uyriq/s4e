@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate, Link, useLocation } from 'react-router-dom'
-import { createStyles, Box } from '@mantine/core'
+import { createStyles, Box, Center } from '@mantine/core'
 
 import { Breadcrumbs, Anchor } from '@mantine/core'
 
@@ -33,29 +33,32 @@ const NotFound404 = function NotFound404() {
     ))
 
     return (
-        <div>
-            <Breadcrumbs>{routes}</Breadcrumbs>
-            <div>
+        <>
+            <Center>
+                <Breadcrumbs>{routes}</Breadcrumbs>
+            </Center>
+            <Center>
                 <h1>Oops! 404 Error</h1>
-                <p>
-                    <h2>{pathname.trim().slice(1, -1)}</h2> The page you requested does not exist
-                </p>
-                <br />
-                <br />
+            </Center>
+            <Center>
+                <h1>{pathname.trim().slice(1, -1)}</h1>
+            </Center>
+            <Center>The page you requested does not exist</Center>
+            <Center>
                 <Box
                     component={Link}
                     to="/"
                     sx={(theme) => ({
                         fontSize: theme.fontSizes.md,
                         [`@media (max-width: ${theme.breakpoints.md}px)`]: {
-                            fontSize: theme.fontSizes.sm,
+                            fontSize: theme.fontSizes.lg,
                         },
                     })}
                 >
-                    get back to only one working landin page
+                    перейти на основную страницу
                 </Box>
-            </div>
-        </div>
+            </Center>
+        </>
     )
 }
 

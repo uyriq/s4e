@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.js": "/s4e/static/js/main.bf76480b.js",
+    "main.js": "/s4e/static/js/main.86cf21b7.js",
     "static/js/455.c8790bc5.chunk.js": "/s4e/static/js/455.c8790bc5.chunk.js",
-    "static/js/699.c1a87446.chunk.js": "/s4e/static/js/699.c1a87446.chunk.js",
+    "static/js/699.08f9c4f7.chunk.js": "/s4e/static/js/699.08f9c4f7.chunk.js",
     "static/js/911.92e5d7a2.chunk.js": "/s4e/static/js/911.92e5d7a2.chunk.js",
     "static/media/tekstura-potertosti-dlya-teksta-krasivo.jpg": "/s4e/static/media/tekstura-potertosti-dlya-teksta-krasivo.bb9a4c32857a58cc732d.jpg",
     "static/media/tajawal-light.ttf": "/s4e/static/media/tajawal-light.0b9c23dd8afee3e6ab60.ttf",
@@ -10,12 +10,12 @@
     "static/media/cold1.jpg": "/s4e/static/media/cold1.5cbeb3a89e32dff8ae45.jpg",
     "static/media/hot1.jpg": "/s4e/static/media/hot1.e33b76dd942b15378a92.jpg",
     "index.html": "/s4e/index.html",
-    "main.bf76480b.js.map": "/s4e/static/js/main.bf76480b.js.map",
+    "main.86cf21b7.js.map": "/s4e/static/js/main.86cf21b7.js.map",
     "455.c8790bc5.chunk.js.map": "/s4e/static/js/455.c8790bc5.chunk.js.map",
-    "699.c1a87446.chunk.js.map": "/s4e/static/js/699.c1a87446.chunk.js.map",
+    "699.08f9c4f7.chunk.js.map": "/s4e/static/js/699.08f9c4f7.chunk.js.map",
     "911.92e5d7a2.chunk.js.map": "/s4e/static/js/911.92e5d7a2.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.bf76480b.js"
+    "static/js/main.86cf21b7.js"
   ]
 }

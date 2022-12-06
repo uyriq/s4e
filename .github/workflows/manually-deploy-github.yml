@@ -2,8 +2,7 @@ name: GitHub Pages, manually
 
 on:
     workflow_dispatch:
-        branches:
-            - main
+
 
 jobs:
     deploy:

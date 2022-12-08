@@ -57,9 +57,13 @@ const TestPage = memo(() => {
 
     const { ref: wrapperRef, width, height } = useResizeObserver<HTMLDivElement>()
     //@ts-expect-errors
-    const hk = width >= 648 ? 0.29 : 0.155
+    const hkText = width >= 648 ? 0.335 : 0.178
     //@ts-expect-errors
-    const wk = width >= 648 ? 410 / width : 400 / width
+    const wkText = width >= 648 ? 450 / width : 470 / width
+    //@ts-expect-errors
+    const hkArrow = width >= 648 ? 0.6 : 0.32
+    //@ts-expect-errors
+    const wkArrow = width >= 648 ? 1.2 : 2.2
 
     const { generateImage, captureRef1, captureRef2, status } = useScreenshot()
 
@@ -155,14 +159,19 @@ const TestPage = memo(() => {
                             alignContent: 'center',
                         }}
                     >
-                        <Grid align="center" justify={'center'}>
+                        <Grid gutter="lg" align="center" justify="center">
                             <Grid.Col span={forspan}>
                                 <InputBase
-                                    p={25}
+                                    ta="center"
+                                    pt={10}
+                                    pr={20}
+                                    pl={25}
                                     size={reSize}
                                     id={id}
-                                    label="ГВ номер счётчика"
+                                    label="Горячая вода"
+                                    placeholder="Номер счётчика"
                                     mask="**-******"
+                                    maskPlaceholder={null}
                                     component={InputMask}
                                     value={'' || hotRegNum}
                                     onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -171,11 +180,14 @@ const TestPage = memo(() => {
                                 ></InputBase>
                                 <Tooltip label="четвертая цифра после запятой двигает стрелочку">
                                     <NumberInputDigit /*@ts-expect-error */
-                                        p={25}
+                                        ta="center"
+                                        pt={10}
+                                        pr={20}
+                                        pl={25}
                                         decimalSeparator=","
                                         size={reSize}
                                         id={id}
-                                        label="ГВ показания"
+                                        placeholder="ГВ показания"
                                         onChange={onChangedigitHot}
                                         val={hotValue}
                                     ></NumberInputDigit>
@@ -195,9 +207,9 @@ const TestPage = memo(() => {
                                             fontKerning: 'normal',
                                             fontSize: 34,
                                             /*@ts-expect-error */
-                                            top: (0.52 * hk * height) / 2,
+                                            top: (0.52 * hkText * height) / 2,
                                             /*@ts-expect-error */
-                                            left: (1.25 * wk * width) / 4,
+                                            left: (1.22 * wkText * width) / 4,
                                             zIndex: 10,
                                             position: 'absolute',
                                             backdropFilter: 'blur(1px)',
@@ -212,9 +224,9 @@ const TestPage = memo(() => {
                                             zIndex: 11,
                                             opacity: 0.8,
                                             /*@ts-expect-error */
-                                            top: (1.75 * hk * height) / 2,
+                                            top: (1 * hkArrow * height) / 2,
                                             /*@ts-expect-error */
-                                            left: (2.6 * wk * width) / 4,
+                                            left: (1 * wkArrow * width) / 4,
                                         }}
                                     >
                                         {/* стрелка hot   */}
@@ -233,16 +245,19 @@ const TestPage = memo(() => {
                                     </Box>
                                     <ControlledCounterDigit
                                         /*@ts-expect-error */
-                                        top={(hk * height) / 2}
+                                        top={(hkText * height) / 2}
                                         /*@ts-expect-error */
-                                        left={(10 + wk * width) / 4}
+                                        left={(18 + wkText * width) / 4}
                                         /*@ts-expect-error  */
                                         spaceBetween={27 - 1 * Number(!!(width < 648))}
                                         digitsArray={digitsHot}
                                         color="#4f4848"
                                     />
                                     <Image
-                                        p={10}
+                                        pt={10}
+                                        pr={20}
+                                        pb={10}
+                                        pl={25}
                                         fit="contain"
                                         src={ImageHot}
                                         radius="xs"
@@ -263,10 +278,16 @@ const TestPage = memo(() => {
                             </Grid.Col>
                             <Grid.Col span={forspan}>
                                 <InputBase
-                                    p={25}
+                                    style={{ textAlign: 'center' }}
+                                    ta="center"
+                                    pt={10}
+                                    pr={20}
+                                    pl={25}
                                     size={reSize}
                                     id={id}
-                                    label="ХВ номер счётчика"
+                                    label="Холодная вода"
+                                    placeholder="Номер счётчика"
+                                    maskPlaceholder={null}
                                     mask="**-******"
                                     component={InputMask}
                                     value={'' || coldRegNum}
@@ -278,9 +299,16 @@ const TestPage = memo(() => {
                                     <NumberInputDigit
                                         /*@ts-expect-error */
                                         size={reSize}
-                                        p={25}
+                                        type="text"
+                                        style={{ textAlign: 'center' }}
+                                        noClampOnBlur={false}
+                                        decimalSeparator=","
+                                        ta="center"
+                                        pt={10}
+                                        pr={20}
+                                        pl={25}
                                         id={id}
-                                        label="ХВ показания"
+                                        placeholder="ХВ показания"
                                         onChange={onChangedigitCold}
                                         val={0 || coldValue}
                                     ></NumberInputDigit>
@@ -304,9 +332,9 @@ const TestPage = memo(() => {
                                             zIndex: 10,
                                             position: 'absolute',
                                             /*@ts-expect-error */
-                                            top: (0.6 * hk * height) / 2,
+                                            top: (0.61 * hkText * height) / 2,
                                             /*@ts-expect-error */
-                                            left: (1.32 * wk * width) / 4,
+                                            left: (1.26 * wkText * width) / 4,
                                             backdropFilter: 'blur(1px)',
                                             textShadow: '1px 1px 1px rgba(0,0,0,.4), -1px -1px 0 rgba(255,255,255,.1)',
                                         }}
@@ -314,14 +342,15 @@ const TestPage = memo(() => {
                                         {coldRegNum}
                                     </CounterText>
                                     <Box
+                                        aria-details="arrow cold"
                                         sx={{
                                             position: 'absolute',
                                             zIndex: 11,
                                             opacity: 0.9,
                                             /*@ts-expect-error */
-                                            top: (1.76 * hk * height) / 2,
+                                            top: (1.01 * hkArrow * height) / 2,
                                             /*@ts-expect-error */
-                                            left: (2.7 * wk * width) / 4,
+                                            left: (1.025 * wkArrow * width) / 4,
                                         }}
                                     >
                                         {/* стрелка cold   */}
@@ -340,16 +369,19 @@ const TestPage = memo(() => {
                                     </Box>
                                     <ControlledCounterDigit
                                         /*@ts-expect-error */
-                                        top={(1.07 * hk * height) / 2}
+                                        top={(1.07 * hkText * height) / 2}
                                         /*@ts-expect-error */
-                                        left={(15 + wk * width) / 4}
+                                        left={(37 + wkText * width) / 4}
                                         /*@ts-expect-error*/
                                         spaceBetween={27 - 1 * Number(!!(width < 648))}
                                         digitsArray={digitsCold}
                                         color="#4f4848"
                                     />
                                     <Image
-                                        p={10}
+                                        pt={10}
+                                        pr={20}
+                                        pb={10}
+                                        pl={25}
                                         fit="contain"
                                         src={ImageCold}
                                         radius="xs"

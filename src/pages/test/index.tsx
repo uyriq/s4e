@@ -57,9 +57,9 @@ const TestPage = memo(() => {
 
     const { ref: wrapperRef, width, height } = useResizeObserver<HTMLDivElement>()
     //@ts-expect-errors
-    const hk = width >= 648 ? 0.29 : 0.155
+    const hk = width >= 648 ? 0.328 : 0.175
     //@ts-expect-errors
-    const wk = width >= 648 ? 410 / width : 400 / width
+    const wk = width >= 648 ? 430 / width : 434 / width
 
     const { generateImage, captureRef1, captureRef2, status } = useScreenshot()
 
@@ -155,13 +155,17 @@ const TestPage = memo(() => {
                             alignContent: 'center',
                         }}
                     >
-                        <Grid align="center" justify={'center'}>
+                        <Grid gutter="lg" align="center" justify="center">
                             <Grid.Col span={forspan}>
                                 <InputBase
-                                    p={25}
+                                    ta="center"
+                                    pt={10}
+                                    pr={20}
+                                    pl={25}
                                     size={reSize}
                                     id={id}
-                                    label="ГВ номер счётчика"
+                                    label="Горячая вода"
+                                    placeholder="Номер счётчика"
                                     mask="**-******"
                                     component={InputMask}
                                     value={'' || hotRegNum}
@@ -171,11 +175,14 @@ const TestPage = memo(() => {
                                 ></InputBase>
                                 <Tooltip label="четвертая цифра после запятой двигает стрелочку">
                                     <NumberInputDigit /*@ts-expect-error */
-                                        p={25}
+                                        ta="center"
+                                        pt={10}
+                                        pr={20}
+                                        pl={25}
                                         decimalSeparator=","
                                         size={reSize}
                                         id={id}
-                                        label="ГВ показания"
+                                        placeholder="ГВ показания"
                                         onChange={onChangedigitHot}
                                         val={hotValue}
                                     ></NumberInputDigit>
@@ -242,7 +249,10 @@ const TestPage = memo(() => {
                                         color="#4f4848"
                                     />
                                     <Image
-                                        p={10}
+                                        pt={10}
+                                        pr={20}
+                                        pb={10}
+                                        pl={25}
                                         fit="contain"
                                         src={ImageHot}
                                         radius="xs"
@@ -263,10 +273,15 @@ const TestPage = memo(() => {
                             </Grid.Col>
                             <Grid.Col span={forspan}>
                                 <InputBase
-                                    p={25}
+                                    style={{ textAlign: 'center' }}
+                                    ta="center"
+                                    pt={10}
+                                    pr={20}
+                                    pl={25}
                                     size={reSize}
                                     id={id}
-                                    label="ХВ номер счётчика"
+                                    label="Холодная вода"
+                                    placeholder="Номер счётчика"
                                     mask="**-******"
                                     component={InputMask}
                                     value={'' || coldRegNum}
@@ -278,9 +293,16 @@ const TestPage = memo(() => {
                                     <NumberInputDigit
                                         /*@ts-expect-error */
                                         size={reSize}
-                                        p={25}
+                                        type="text"
+                                        style={{ textAlign: 'center' }}
+                                        noClampOnBlur={false}
+                                        decimalSeparator=","
+                                        ta="center"
+                                        pt={10}
+                                        pr={20}
+                                        pl={25}
                                         id={id}
-                                        label="ХВ показания"
+                                        placeholder="ХВ показания"
                                         onChange={onChangedigitCold}
                                         val={0 || coldValue}
                                     ></NumberInputDigit>
@@ -349,7 +371,10 @@ const TestPage = memo(() => {
                                         color="#4f4848"
                                     />
                                     <Image
-                                        p={10}
+                                        pt={10}
+                                        pr={20}
+                                        pb={10}
+                                        pl={25}
                                         fit="contain"
                                         src={ImageCold}
                                         radius="xs"

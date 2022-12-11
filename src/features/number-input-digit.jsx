@@ -24,7 +24,7 @@ const NumberInputDigit = (props) => {
 NumberInputDigit.propTypes = {
     restofProps: PropTypes.element,
     onChange: PropTypes.func.isRequired,
-    val: PropTypes.number.isRequired,
+    val: PropTypes.oneOfType([PropTypes.number.isRequired, PropTypes.object]),
 }
 
 export default NumberInputDigit

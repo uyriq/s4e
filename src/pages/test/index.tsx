@@ -11,6 +11,7 @@ import {
     Switch,
     Group,
     useMantineTheme,
+    useMantineColorScheme,
     InputBase,
     SimpleGrid,
     Button,
@@ -40,7 +41,8 @@ import { getCookies, getCookie, setCookie, deleteCookie } from 'cookies-next'
 
 const TestPage = memo(() => {
     const [isRandomFname] = useLocalStorage({ key: 'isRandomFname' })
-
+    const { colorScheme } = useMantineColorScheme()
+    const dark = colorScheme === 'dark'
     const buttonRef = useRef(null)
     const [hotRegNum, setHotRegNum] = useState<string>('')
     const [coldRegNum, setColdRegNum] = useState<string>('')
@@ -178,19 +180,26 @@ const TestPage = memo(() => {
                                         setHotRegNum(event.currentTarget.value)
                                     }
                                 ></InputBase>
-                                <Tooltip label="четвертая цифра после запятой двигает стрелочку">
-                                    <NumberInputDigit /*@ts-expect-error */
-                                        ta="center"
-                                        pt={10}
-                                        pr={20}
-                                        pl={25}
-                                        decimalSeparator=","
-                                        size={reSize}
-                                        id={id}
-                                        placeholder="ГВ показания"
-                                        onChange={onChangedigitHot}
-                                        val={hotValue}
-                                    ></NumberInputDigit>
+                                <Tooltip
+                                    label="четвертая цифра после запятой двигает стрелочку"
+                                    color={dark ? 'yellow' : 'blue'}
+                                    withArrow
+                                >
+                                    <div style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+                                        <NumberInputDigit
+                                            /*@ts-expect-error */
+                                            ta="center"
+                                            pt={10}
+                                            pr={20}
+                                            pl={25}
+                                            decimalSeparator=","
+                                            size={reSize}
+                                            id={id}
+                                            placeholder="ГВ показания"
+                                            onChange={onChangedigitHot}
+                                            val={hotValue || null}
+                                        ></NumberInputDigit>
+                                    </div>
                                 </Tooltip>
                                 <Box
                                     /* @ts-expect-error */
@@ -295,23 +304,29 @@ const TestPage = memo(() => {
                                         setColdRegNum(event.currentTarget.value)
                                     }
                                 ></InputBase>
-                                <Tooltip label="четвертая цифра после запятой двигает стрелочку">
-                                    <NumberInputDigit
-                                        /*@ts-expect-error */
-                                        size={reSize}
-                                        type="text"
-                                        style={{ textAlign: 'center' }}
-                                        noClampOnBlur={false}
-                                        decimalSeparator=","
-                                        ta="center"
-                                        pt={10}
-                                        pr={20}
-                                        pl={25}
-                                        id={id}
-                                        placeholder="ХВ показания"
-                                        onChange={onChangedigitCold}
-                                        val={0 || coldValue}
-                                    ></NumberInputDigit>
+                                <Tooltip
+                                    label="четвертая цифра после запятой двигает стрелочку"
+                                    color={dark ? 'yellow' : 'blue'}
+                                    withArrow
+                                >
+                                    <div style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+                                        <NumberInputDigit
+                                            /*@ts-expect-error */
+                                            size={reSize}
+                                            type="text"
+                                            style={{ textAlign: 'center' }}
+                                            noClampOnBlur={false}
+                                            decimalSeparator=","
+                                            ta="center"
+                                            pt={10}
+                                            pr={20}
+                                            pl={25}
+                                            id={id}
+                                            onChange={onChangedigitCold}
+                                            placeholder="ХВ показания"
+                                            val={hotValue || null}
+                                        ></NumberInputDigit>
+                                    </div>
                                 </Tooltip>
                                 {/* eslint-disable @typescript-eslint/no-unused-vars */}
                                 {/* @ts-ignore */}

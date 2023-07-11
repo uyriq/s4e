@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.js": "/s4e/static/js/main.c15bd77c.js",
+    "main.js": "/s4e/static/js/main.fe040888.js",
     "static/js/455.d47b437c.chunk.js": "/s4e/static/js/455.d47b437c.chunk.js",
     "static/js/699.58b06bae.chunk.js": "/s4e/static/js/699.58b06bae.chunk.js",
-    "static/js/911.92e5d7a2.chunk.js": "/s4e/static/js/911.92e5d7a2.chunk.js",
+    "static/js/911.7a16bf05.chunk.js": "/s4e/static/js/911.7a16bf05.chunk.js",
     "static/media/tekstura-potertosti-dlya-teksta-krasivo.jpg": "/s4e/static/media/tekstura-potertosti-dlya-teksta-krasivo.bb9a4c32857a58cc732d.jpg",
     "static/media/tajawal-light.ttf": "/s4e/static/media/tajawal-light.0b9c23dd8afee3e6ab60.ttf",
     "static/media/tajawal-regular.ttf": "/s4e/static/media/tajawal-regular.e4ac0a5abb7d379e2308.ttf",
     "static/media/cold1.jpg": "/s4e/static/media/cold1.5cbeb3a89e32dff8ae45.jpg",
     "static/media/hot1.jpg": "/s4e/static/media/hot1.e33b76dd942b15378a92.jpg",
     "index.html": "/s4e/index.html",
-    "main.c15bd77c.js.map": "/s4e/static/js/main.c15bd77c.js.map",
+    "main.fe040888.js.map": "/s4e/static/js/main.fe040888.js.map",
     "455.d47b437c.chunk.js.map": "/s4e/static/js/455.d47b437c.chunk.js.map",
     "699.58b06bae.chunk.js.map": "/s4e/static/js/699.58b06bae.chunk.js.map",
-    "911.92e5d7a2.chunk.js.map": "/s4e/static/js/911.92e5d7a2.chunk.js.map"
+    "911.7a16bf05.chunk.js.map": "/s4e/static/js/911.7a16bf05.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.c15bd77c.js"
+    "static/js/main.fe040888.js"
   ]
 }

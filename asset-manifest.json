@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.js": "/s4e/static/js/main.fe040888.js",
-    "static/js/455.d47b437c.chunk.js": "/s4e/static/js/455.d47b437c.chunk.js",
-    "static/js/699.58b06bae.chunk.js": "/s4e/static/js/699.58b06bae.chunk.js",
-    "static/js/911.7a16bf05.chunk.js": "/s4e/static/js/911.7a16bf05.chunk.js",
+    "main.js": "/s4e/static/js/main.3a6b46b9.js",
+    "static/js/398.a2c050a7.chunk.js": "/s4e/static/js/398.a2c050a7.chunk.js",
+    "static/js/976.1b1acc7c.chunk.js": "/s4e/static/js/976.1b1acc7c.chunk.js",
+    "static/js/172.5725bf66.chunk.js": "/s4e/static/js/172.5725bf66.chunk.js",
     "static/media/tekstura-potertosti-dlya-teksta-krasivo.jpg": "/s4e/static/media/tekstura-potertosti-dlya-teksta-krasivo.bb9a4c32857a58cc732d.jpg",
     "static/media/tajawal-light.ttf": "/s4e/static/media/tajawal-light.0b9c23dd8afee3e6ab60.ttf",
     "static/media/tajawal-regular.ttf": "/s4e/static/media/tajawal-regular.e4ac0a5abb7d379e2308.ttf",
     "static/media/cold1.jpg": "/s4e/static/media/cold1.5cbeb3a89e32dff8ae45.jpg",
     "static/media/hot1.jpg": "/s4e/static/media/hot1.e33b76dd942b15378a92.jpg",
     "index.html": "/s4e/index.html",
-    "main.fe040888.js.map": "/s4e/static/js/main.fe040888.js.map",
-    "455.d47b437c.chunk.js.map": "/s4e/static/js/455.d47b437c.chunk.js.map",
-    "699.58b06bae.chunk.js.map": "/s4e/static/js/699.58b06bae.chunk.js.map",
-    "911.7a16bf05.chunk.js.map": "/s4e/static/js/911.7a16bf05.chunk.js.map"
+    "main.3a6b46b9.js.map": "/s4e/static/js/main.3a6b46b9.js.map",
+    "398.a2c050a7.chunk.js.map": "/s4e/static/js/398.a2c050a7.chunk.js.map",
+    "976.1b1acc7c.chunk.js.map": "/s4e/static/js/976.1b1acc7c.chunk.js.map",
+    "172.5725bf66.chunk.js.map": "/s4e/static/js/172.5725bf66.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.fe040888.js"
+    "static/js/main.3a6b46b9.js"
   ]
 }

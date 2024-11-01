@@ -37,11 +37,13 @@ jobs:
 
           # Write files
           echo $SEM_VER > VERSION
-          sed -i "12i ## [${SEM_VER}]\n### Changed\n* ${COMMIT_MSG}" CHANGELOG.md
+          if [ -f CHANGELOG.md ]; then
+            sed -i "12i ## [${SEM_VER}]\n### Changed\n* ${COMMIT_MSG}" CHANGELOG.md
+            git add CHANGELOG.md
+          fi
 
           # Add new git commit
           git add VERSION
-          git add CHANGELOG.md
           git config --global user.name "dependabot[bot]"
           git config --global user.email "dependabot[bot]@users.noreply.github.com"
           git commit -m "[Automated] Increment Version"
@@ -53,3 +55,24 @@ jobs:
         with:
           ACT_TOKEN: ${{ secrets.ACT_TOKEN }}
           branch: ${{ github.head_ref }}
+
+  merge:
+    runs-on: ubuntu-20.04
+    needs: setup
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Merge Dependabot PR
+        if: github.event.pull_request.user.login == 'dependabot[bot]'
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git merge --no-ff ${{ github.event.pull_request.head.ref }}
+
+      - name: Delete branch
+        if: github.event.pull_request.user.login == 'dependabot[bot]'
+        run: |
+          git push origin --delete ${{ github.event.pull_request.head.ref }}
